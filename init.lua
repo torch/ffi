@@ -10,7 +10,10 @@
 
 -- We need FFI, of course :-)
 require 'torch'
-ffi = require 'ffi'
+local ok = pcall(function() ffi = require 'ffi' end)
+if not ok then
+   error('FFI could not be loaded, please make sure you built Torch with LuaJIT (cmake -DWITH_LUA_JIT=1)')
+end
 
 -- Generate Bindings for Storages of all types:
 local defs = {}
