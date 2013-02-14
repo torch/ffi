@@ -19,38 +19,42 @@ end
 local defs = {}
 for k,v in pairs(torch) do
    if k:find('(.+)Storage') then
-      local type_storage = k
-      local type_elt = k:gmatch('(.*)Storage')():lower()
-      type_elt = type_elt:gsub('byte', 'unsigned char')
-      table.insert(defs, [[
-         typedef struct
-         {
-            ]] .. type_elt .. [[ *data;
-            long size;
-            int refcount;
-            char flag;
-         } ]] .. type_storage .. [[;
-      ]])
+      if k ~= 'repeatStorage' then
+         local type_storage = k
+         local type_elt = k:gmatch('(.*)Storage')():lower()
+         type_elt = type_elt:gsub('byte', 'unsigned char')
+         table.insert(defs, [[
+            typedef struct
+            {
+               ]] .. type_elt .. [[ *data;
+               long size;
+               int refcount;
+               char flag;
+            } ]] .. type_storage .. [[;
+         ]])
+      end
    end
 end
 
 -- Generate Bindings for Tensors of all types:
 for k,v in pairs(torch) do
    if k:find('(.+)Tensor') then
-      local type_tensor = k
-      local type_storage = k:gmatch('(.*)Tensor')() .. 'Storage'
-      table.insert(defs, [[
-         typedef struct 
-         {
-            long *size;
-            long *stride;
-            int nDimension;
-            ]] .. type_storage .. [[ *storage;
-            long storageOffset;
-            int refcount;
-            char flag;
-         } ]] .. type_tensor .. [[;
-      ]])
+      if k ~= 'repeatTensor' then
+         local type_tensor = k
+         local type_storage = k:gmatch('(.*)Tensor')() .. 'Storage'
+         table.insert(defs, [[
+            typedef struct 
+            {
+               long *size;
+               long *stride;
+               int nDimension;
+               ]] .. type_storage .. [[ *storage;
+               long storageOffset;
+               int refcount;
+               char flag;
+            } ]] .. type_tensor .. [[;
+         ]])
+      end
    end
 end
 
