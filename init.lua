@@ -79,3 +79,4 @@ function torch.data(obj)
    end
 end 
 
+torch.include('torchffi', 'apply.lua')
