@@ -1,13 +1,16 @@
 
-local function enableFastApply()
-   local mt = getmetatable(torch.Tensor)
-   local origApply = mt.apply
-   mt.apply = function(tensor, func)
+local function getDataArray(tensor, pointerDef)
+   return ffi.cast(pointerDef, torch.pointer(tensor)).storage.data
+end
+
+local function redefineApply(tensorClass, pointerDef)
+   local origApply = tensorClass.apply
+   tensorClass.apply = function(tensor, func)
       if not tensor:isContiguous() then
          return origApply(tensor, func)
       end
 
-      local data = torch.data(tensor)
+      local data = getDataArray(tensor, pointerDef)
       local offset = tensor:storageOffset()
       -- A zero-based index is used to access the data.
       -- The end index is (startIndex + nElements - 1).
@@ -18,4 +21,12 @@ local function enableFastApply()
    end
 end
 
-enableFastApply()
+-- Define the faster apply() for Tensors of all types:
+for k, v in pairs(torch) do
+   if k:find('(.+)Tensor') then
+      if k ~= 'repeatTensor' then
+         local pointerDef = k .. '*'
+         redefineApply(v, pointerDef)
+      end
+    end
+end
