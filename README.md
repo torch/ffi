@@ -5,13 +5,6 @@ This package exposes Torch's Tensor and Storage data structures, through
 LuaJIT's FFI. This allows extremely fast access to Tensors and Storages, 
 all from Lua.
 
-The original neural network from Torch7, 'nn', contains stable and widely
-used modules. 'nnx' contains more experimental, unproven modules, and
-optimizations. Eventually, modules that become stable enough will make 
-their way into 'nn' (some already have).
-
-Disclaimer: DONT USE THIS PACKAGE WITHOUT FIRST CHECKING ITS MODULES !!!
-
 Installation
 ------------
 
