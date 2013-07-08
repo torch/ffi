@@ -9,17 +9,12 @@ Installation
 ------------
 
 * Install Torch7 (refer to its own [documentation](www.torch.ch)). It
-  is necessary to build it with LuaJIT, to enable FFI:
-
-```sh
-$ cmake . -D WITH_LUA_JIT=1
-$ make install
-```
+  is necessary to build it with LuaJIT (the default for new Torch installs).
 
 * Install _torchffi_:
 
 ```sh
-$ torch-pkg -local install torchffi
+$ torch-rocks install torchffi
 ```
 
 Usage
