@@ -6,7 +6,7 @@ end
 local function redefineMap(tensorClass, pointerDef)
    local origMap = tensorClass.map
    tensorClass.map = function(tensor, other, func)
-      if not tensor:isContiguous() then
+      if (not tensor:isContiguous()) or (not other:isContiguous()) then
          return origMap(tensor, other, func)
       end
 
