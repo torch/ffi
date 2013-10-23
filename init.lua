@@ -80,3 +80,4 @@ function torch.data(obj)
 end 
 
 torch.include('torchffi', 'apply.lua')
+torch.include('torchffi', 'map.lua')
