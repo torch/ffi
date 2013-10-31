@@ -70,7 +70,7 @@ function torch.data(obj)
    local type_storage = type_obj:gfind('torch%.(.*)Storage')()
    if type_tensor then
       -- return raw pointer to data
-      return ffi.cast(type_tensor .. 'Tensor*', torch.pointer(obj)).storage.data
+      return ffi.cast(type_tensor .. 'Tensor*', torch.pointer(obj)).storage.data + obj:storageOffset()
    elseif type_storage then
       -- return raw pointer to data
       return ffi.cast(type_storage .. 'Storage*', torch.pointer(obj)).data
