@@ -24,7 +24,7 @@ end
 -- Define the faster apply() for Tensors of all types:
 for k, v in pairs(torch) do
    if k:find('(.+)Tensor') then
-      if k ~= 'repeatTensor' then
+      if k ~= 'repeatTensor' and k ~= 'CudaTensor' then
          local pointerDef = k .. '*'
          redefineApply(v, pointerDef)
       end

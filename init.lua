@@ -19,7 +19,7 @@ end
 local defs = {}
 for k,v in pairs(torch) do
    if k:find('(.+)Storage') then
-      if k ~= 'repeatStorage' then
+      if k ~= 'repeatStorage' and k ~= 'CudaStorage' then
          local type_storage = k
          local type_elt = k:gmatch('(.*)Storage')():lower()
          type_elt = type_elt:gsub('byte', 'unsigned char')
@@ -39,7 +39,7 @@ end
 -- Generate Bindings for Tensors of all types:
 for k,v in pairs(torch) do
    if k:find('(.+)Tensor') then
-      if k ~= 'repeatTensor' then
+      if k ~= 'repeatTensor' and k ~= 'CudaTensor' then
          local type_tensor = k
          local type_storage = k:gmatch('(.*)Tensor')() .. 'Storage'
          table.insert(defs, [[
