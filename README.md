@@ -14,7 +14,7 @@ Installation
 * Install _torchffi_:
 
 ```sh
-$ torch-rocks install torchffi
+$ luarocks install torchffi
 ```
 
 Usage
