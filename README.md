@@ -60,3 +60,13 @@ use it size and stride information). Making sure a tensor is contiguous is easy:
 > data = torch.data(t_contiguous)
 ```
 
+Last, the pointer can be returned as a plain Lua number. This can be useful
+to share pointers between threads:
+
+```lua
+> t = torch.randn(10)
+> p = torch.data(p,true)
+> s = torch.Storage(10, p)
+> tt = torch.Tensor(s)
+-- tt and t are a view on the same data. 
+```

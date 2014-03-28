@@ -63,20 +63,26 @@ defs = table.concat(defs,'\n')
 ffi.cdef(defs)
 
 -- Method to return raw data table
-function torch.data(obj)
+function torch.data(obj, asnumber)
    -- first cast pointer into the right type
    local type_obj = torch.typename(obj)
    local type_tensor = type_obj:gfind('torch%.(.*)Tensor')()
    local type_storage = type_obj:gfind('torch%.(.*)Storage')()
+   local ptr
    if type_tensor then
       -- return raw pointer to data
-      return ffi.cast(type_tensor .. 'Tensor*', torch.pointer(obj)).storage.data + (obj:storageOffset() - 1)
+      ptr = ffi.cast(type_tensor .. 'Tensor*', torch.pointer(obj)).storage.data + (obj:storageOffset() - 1)
    elseif type_storage then
       -- return raw pointer to data
-      return ffi.cast(type_storage .. 'Storage*', torch.pointer(obj)).data
+      ptr = ffi.cast(type_storage .. 'Storage*', torch.pointer(obj)).data
    else
       print('Unknown data type: ' .. type_obj)
+      return
    end
+   if asnumber then
+      ptr = tonumber(ffi.cast('intptr_t', ptr))
+   end
+   return ptr
 end 
 
 torch.include('torchffi', 'apply.lua')
