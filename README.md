@@ -1,3 +1,6 @@
+THIS PACKAGE IS DEPRECEATED.
+The FFI functions have been integrated into the torch7 core.
+
 TorchFFI
 ========
 
