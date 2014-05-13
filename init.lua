@@ -91,3 +91,4 @@ function torch.data(obj, asnumber)
 end 
 
 torch.include('torchffi', 'apply.lua')
+torch.include('torchffi', 'map.lua')
