@@ -1,4 +1,4 @@
-THIS PACKAGE IS DEPRECEATED.
+### THIS PACKAGE IS DEPRECEATED.
 The FFI functions have been integrated into the torch7 core.
 
 TorchFFI
@@ -11,7 +11,7 @@ all from Lua.
 Installation
 ------------
 
-* Install Torch7 (refer to its own [documentation](www.torch.ch)). It
+* Install Torch7 (refer to its own [documentation](http://www.torch.ch)). It
   is necessary to build it with LuaJIT (the default for new Torch installs).
 
 * Install _torchffi_:
